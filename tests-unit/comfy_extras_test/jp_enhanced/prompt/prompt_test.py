@@ -15,12 +15,12 @@ def test_translation_orders_inputs_and_preserves_generation_settings():
     assert result.result == ("Clean photograph.\nKeep the same face.",)
     clip.tokenize.assert_called_once_with(
         "Translate. /no_think\n\n人物\n服装\n背景", image=None, skip_template=False,
-        min_length=1, thinking=False, video=None, audio=None,
+        min_length=1, thinking=False, video=None, audio=None, system_prompt="",
     )
     clip.generate.assert_called_once_with(
         clip.tokenize.return_value, do_sample=False, max_length=768, temperature=1.0,
         top_k=50, top_p=1.0, min_p=0.0, repetition_penalty=1.0,
-        presence_penalty=0.0, seed=None,
+        presence_penalty=0.0, seed=None, mtp=True,
     )
 
 
