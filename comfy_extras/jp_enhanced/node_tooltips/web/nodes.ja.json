@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "source": "ComfyUI-JP-Enhanced",
+  "license": "CC0-1.0",
+  "revision": 1,
+  "updatedAt": "2026-08-23",
+  "changes": ["初期の日本語別名・説明データ"],
+  "nodes": [
+    {"node": "CheckpointLoaderSimple", "ja": "チェックポイント読み込み", "description": "画像生成の基本モデルを選択します。", "category": "モデル", "aliases": ["モデル読み込み", "基本モデル", "checkpoint"]},
+    {"node": "LoraLoader", "ja": "LoRA読み込み", "description": "CheckpointにLoRAを追加します。", "category": "モデル", "aliases": ["lora", "追加学習モデル", "ローラ"]},
+    {"node": "CLIPTextEncode", "ja": "Promptテキストエンコード", "description": "Promptを条件付けに変換します。", "category": "条件付け", "aliases": ["プロンプト", "テキストエンコード", "条件付け"]},
+    {"node": "EmptyLatentImage", "ja": "空の潜在画像", "description": "生成する画像の大きさを設定します。", "category": "潜在画像", "aliases": ["latent", "潜在", "生成サイズ", "幅高さ"]},
+    {"node": "KSampler", "ja": "サンプラー", "description": "条件付けと潜在画像から画像生成を進めます。", "category": "生成", "aliases": ["生成", "画像生成", "サンプリング", "ksampler"]},
+    {"node": "VAEDecode", "ja": "VAEデコード", "description": "潜在画像を表示・保存できる画像へ変換します。", "category": "画像", "aliases": ["潜在画像を画像へ", "デコード", "vae"]},
+    {"node": "LoadImage", "ja": "画像読み込み", "description": "ローカル画像をWorkflowへ読み込みます。", "category": "画像", "aliases": ["入力画像", "画像を開く", "image load"]},
+    {"node": "SaveImage", "ja": "画像保存", "description": "生成または処理した画像を保存します。", "category": "画像", "aliases": ["出力", "保存", "image save"]},
+    {"node": "ControlNetLoader", "ja": "ControlNet読み込み", "description": "ControlNetモデルを選択します。", "category": "モデル", "aliases": ["コントロールネット", "制御モデル", "controlnet"]},
+    {"node": "VAELoader", "ja": "VAE読み込み", "description": "VAEモデルを選択します。", "category": "モデル", "aliases": ["vaeモデル", "画像変換モデル"]},
+    {"node": "UpscaleModelLoader", "ja": "アップスケールモデル読み込み", "description": "画像拡大用のモデルを選択します。", "category": "モデル", "aliases": ["高解像度化モデル", "拡大モデル", "upscale"]}
+  ]
+}

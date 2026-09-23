@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "revision": 1,
+  "guides": [
+    {
+      "id": "gpu-memory",
+      "exceptionTypes": ["OutOfMemoryError", "torch.OutOfMemoryError"],
+      "messageIncludes": ["out of memory", "cuda error: out of memory"],
+      "summary": "GPUメモリ（VRAM）が不足した可能性があります。",
+      "causes": ["画像サイズやバッチ数が大きい", "同時に読み込むモデルやControlNetが多い", "他のGPUアプリケーションがメモリを使用している"],
+      "checks": ["画像サイズとbatch_sizeを下げる", "不要なモデル・ControlNetを外す", "GPUを使用する他のアプリケーションを閉じる"],
+      "actions": ["より小さいサイズ・少ないstepsで再実行する", "VRAM使用量の少ないWorkflowへ切り替える"],
+      "confidence": "例外種別または代表的なメッセージに基づく一般的な案内です。",
+      "revision": 1
+    },
+    {
+      "id": "model-file-not-found",
+      "exceptionTypes": ["FileNotFoundError"],
+      "messageIncludes": ["file not found", "could not find", "not found"],
+      "summary": "Workflowが参照するモデルまたは入力ファイルが見つからない可能性があります。",
+      "causes": ["必要なモデルが未配置", "モデル名や入力ファイル名が変更された", "Workflowとモデルの種類が一致していない"],
+      "checks": ["該当するモデル種別のフォルダにファイルがあるか確認する", "ノードで選択されている項目を確認する", "Workflowの必要モデル種別を確認する"],
+      "actions": ["必要なモデルを配置してからノードで選択し直す", "利用可能なモデルに合わせてWorkflowを変更する"],
+      "confidence": "例外種別または代表的なメッセージに基づく一般的な案内です。",
+      "revision": 1
+    },
+    {
+      "id": "node-input-validation",
+      "exceptionTypes": ["NodeInputError"],
+      "messageIncludes": ["required input is missing", "invalid input", "validation failed"],
+      "summary": "ノードの入力値または接続が要件を満たしていない可能性があります。",
+      "causes": ["必須入力が未接続", "値が許容範囲外", "接続する型が一致していない"],
+      "checks": ["失敗したノードの必須入力を確認する", "ウィジェットの値と接続線を確認する", "入力と出力の型が一致しているか確認する"],
+      "actions": ["不足している入力を接続する", "ノードが受け付ける値へ変更する"],
+      "confidence": "例外種別または代表的なメッセージに基づく一般的な案内です。",
+      "revision": 1
+    }
+  ],
+  "unknownGuide": {
+    "id": "unknown",
+    "summary": "原因を特定できないエラーです。英語原文と失敗したノードを確認してください。",
+    "causes": ["モデル・入力・拡張・実行環境のいずれかで問題が起きている可能性があります"],
+    "checks": ["英語原文を残して確認する", "失敗したノードとその入力を確認する", "Workflowの不足ノード・必要モデルを確認する"],
+    "actions": ["変更を小さくして再実行する", "問題が続く場合は原文エラーを使って調べる"],
+    "confidence": "原文だけでは原因を断定できないため、一般的な案内です。",
+    "revision": 1
+  }
+}

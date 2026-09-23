@@ -2286,7 +2286,7 @@ async def load_custom_node(module_path: str, ignore=set(), module_parent="custom
         if hasattr(module, "WEB_DIRECTORY") and getattr(module, "WEB_DIRECTORY") is not None:
             web_dir = os.path.abspath(os.path.join(module_dir, getattr(module, "WEB_DIRECTORY")))
             if os.path.isdir(web_dir):
-                EXTENSION_WEB_DIRS[module_name] = web_dir
+                EXTENSION_WEB_DIRS[get_module_name(module_path)] = web_dir
 
         # V1 node definition
         if hasattr(module, "NODE_CLASS_MAPPINGS") and getattr(module, "NODE_CLASS_MAPPINGS") is not None:
@@ -2529,6 +2529,9 @@ async def init_builtin_extra_nodes():
         "nodes_depth_anything_3.py",
         "nodes_seed.py",
         "nodes_text.py",
+        "jp_enhanced/prompt",
+        "jp_enhanced/node_tooltips",
+        "jp_enhanced/error_support",
     ]
 
     import_failed = []
