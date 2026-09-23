@@ -228,8 +228,8 @@ app.registerExtension({
   async setup() {
     const style = document.createElement("style");
     style.textContent = `
-      #jp-enhanced-error-launcher { position: fixed; right: 16px; bottom: 16px; z-index: 10000; }
-      #jp-enhanced-error-guide { position: fixed; right: 16px; bottom: 56px; z-index: 10000; box-sizing: border-box; width: min(480px, calc(100vw - 32px)); max-height: calc(100dvh - 100px); overflow: auto; padding: 16px; color: #f5f5f5; background: #252525; border: 1px solid #666; border-radius: 8px; }
+      #jp-enhanced-error-launcher { position: fixed; right: 16px; bottom: 80px; z-index: 10000; }
+      #jp-enhanced-error-guide { position: fixed; right: 16px; bottom: 120px; z-index: 10000; box-sizing: border-box; width: min(480px, calc(100vw - 32px)); max-height: calc(100dvh - 144px); overflow: auto; padding: 16px; color: #f5f5f5; background: #252525; border: 1px solid #666; border-radius: 8px; }
       #jp-enhanced-error-guide[hidden] { display: none; }
       #jp-enhanced-error-guide pre { white-space: pre-wrap; overflow-wrap: anywhere; }
       .jp-enhanced-error-notice { position: fixed; right: 16px; top: 80px; z-index: 10001; max-width: calc(100vw - 32px); padding: 12px; color: #f5f5f5; background: #7f1d1d; border: 1px solid #ef4444; border-radius: 8px; }

@@ -2542,6 +2542,7 @@ async def init_builtin_extra_nodes():
         "jp_enhanced/prompt",
         "jp_enhanced/node_tooltips",
         "jp_enhanced/error_support",
+        "jp_enhanced/startup_sidebar",
         "nodes_loop.py",
         "nodes_sam3d_body.py",
         "nodes_marigold.py",
