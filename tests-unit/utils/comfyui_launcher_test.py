@@ -28,7 +28,7 @@ class LauncherTests(unittest.TestCase):
         with patch.object(psutil, 'process_iter', return_value=[own, other]), \
              patch.object(psutil, 'wait_procs', return_value=([own], [])), \
              patch.object(psutil, 'net_connections', return_value=[]):
-            launcher.stop_existing(root)
+            launcher.stop_existing(root, 8188)
         own.terminate.assert_called_once()
         other.terminate.assert_not_called()
 
@@ -38,13 +38,13 @@ class LauncherTests(unittest.TestCase):
              patch.object(psutil, 'wait_procs', return_value=([], [])), \
              patch.object(psutil, 'net_connections', return_value=[connection]):
             with self.assertRaisesRegex(RuntimeError, 'another process'):
-                launcher.stop_existing(Path.cwd())
+                launcher.stop_existing(Path.cwd(), 8188)
 
     def test_stop_timeout_blocks_start(self):
         with patch.object(psutil, 'process_iter', return_value=[]), \
              patch.object(psutil, 'wait_procs', return_value=([], [Mock()])):
             with self.assertRaisesRegex(RuntimeError, 'did not stop'):
-                launcher.stop_existing(Path.cwd())
+                launcher.stop_existing(Path.cwd(), 8188)
 
 
 if __name__ == '__main__':
