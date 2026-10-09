@@ -51,9 +51,60 @@ class JPEnhancedEnglishPrompt(io.ComfyNode):
         return io.NodeOutput("\n".join(part for part in (english_prefix.strip(), translated, english_suffix) if part.strip()))
 
 
+def scene_inputs():
+    return [
+        io.String.Input("person", display_name="人物特徴", default="", multiline=True),
+        io.String.Input("clothing", display_name="服装", default="", multiline=True),
+        io.String.Input("background", display_name="背景", default="", multiline=True),
+        io.String.Input("pose", display_name="ポーズ・構図", default="", multiline=True),
+    ]
+
+
+class JPScenePromptEnglish(io.ComfyNode):
+    @classmethod
+    def define_schema(cls):
+        return io.Schema(
+            node_id="JPScenePromptEnglish",
+            display_name="4項目統合プロンプト",
+            category="JP Enhanced/テキスト",
+            description="人物特徴・服装・背景・ポーズ・構図の順に改行で結合します。空欄は省略し、日本語・英語など言語を問わず、入力文字や重み記法をそのまま渡します。翻訳は行いません。",
+            inputs=scene_inputs(),
+            outputs=[io.String.Output(display_name="統合プロンプト")],
+        )
+
+    @classmethod
+    def execute(cls, person, clothing, background, pose):
+        return io.NodeOutput("\n".join(text for text in (person, clothing, background, pose) if text.strip()))
+
+
+class JPScenePromptJapanese(io.ComfyNode):
+    @classmethod
+    def define_schema(cls):
+        return io.Schema(
+            node_id="JPScenePromptJapanese",
+            display_name="4項目プロンプト（日本語→英語）",
+            category="JP Enhanced/テキスト",
+            description="4項目を結合して英訳します。出力は生成ノードの「Positive 英語」へ接続してください。",
+            inputs=scene_inputs() + [
+                io.Clip.Input("clip", display_name="日本語翻訳用CLIP", optional=True,
+                              tooltip="日本語がある場合に必要。例：Qwen3 4B / type=lumina2。"),
+                io.Int.Input("max_length", display_name="最大生成トークン数", default=768, min=1, max=32768),
+            ],
+            outputs=[io.String.Output(display_name="統合英語プロンプト")],
+        )
+
+    @classmethod
+    def execute(cls, person, clothing, background, pose, clip=None, max_length=768):
+        return JPEnhancedEnglishPrompt.execute(
+            clip=clip,
+            texts=dict(zip(("text_0", "text_1", "text_2", "text_3"), (person, clothing, background, pose))),
+            max_length=max_length,
+        )
+
+
 class JPPromptExtension(ComfyExtension):
     async def get_node_list(self):
-        return [JPEnhancedEnglishPrompt]
+        return [JPEnhancedEnglishPrompt, JPScenePromptJapanese, JPScenePromptEnglish]
 
 
 async def comfy_entrypoint():

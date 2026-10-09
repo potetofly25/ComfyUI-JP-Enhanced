@@ -2,7 +2,7 @@ import asyncio
 import unittest
 from unittest.mock import Mock
 
-from comfy_extras.jp_enhanced.prompt import JPEnhancedEnglishPrompt, comfy_entrypoint
+from comfy_extras.jp_enhanced.prompt import JPEnhancedEnglishPrompt, JPScenePromptJapanese, JPScenePromptEnglish, comfy_entrypoint
 
 
 def test_translation_orders_inputs_and_preserves_generation_settings():
@@ -46,7 +46,7 @@ def test_plain_translation_without_prefix():
 
 def test_extension_exposes_common_node():
     extension = asyncio.run(comfy_entrypoint())
-    assert asyncio.run(extension.get_node_list()) == [JPEnhancedEnglishPrompt]
+    assert asyncio.run(extension.get_node_list()) == [JPEnhancedEnglishPrompt, JPScenePromptJapanese, JPScenePromptEnglish]
     schema = JPEnhancedEnglishPrompt.INPUT_TYPES()
     assert schema["optional"]["texts"][0] == "COMFY_AUTOGROW_V3"
 
@@ -68,3 +68,16 @@ def test_raw_only_and_empty_negative_do_not_require_clip():
 def test_japanese_requires_translation_clip():
     with unittest.TestCase().assertRaisesRegex(ValueError, "翻訳用CLIP"):
         JPEnhancedEnglishPrompt.execute(texts={"text_0": "ぼけ"})
+
+
+def test_scene_english_keeps_weights_and_skips_blank_fields():
+    assert JPScenePromptEnglish.execute("person", " (silk:1.2) ", "", "standing").result == ("person\n (silk:1.2) \nstanding",)
+
+
+def test_scene_japanese_preserves_field_order():
+    clip = Mock()
+    clip.decode.return_value = "A person wearing a coat in a park, standing."
+    result = JPScenePromptJapanese.execute("人物", "コート", "公園", "立つ", clip=clip)
+    assert result.result == (clip.decode.return_value,)
+    assert clip.tokenize.call_args.args[0].endswith("人物\nコート\n公園\n立つ")
+    assert JPScenePromptJapanese.execute("", "", "", "").result == ("",)

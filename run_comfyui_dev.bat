@@ -1,0 +1,43 @@
+@echo off
+setlocal
+
+REM Move to the folder where this BAT file is located.
+cd /d "%~dp0"
+
+REM Check virtual environment.
+if not exist ".venv\Scripts\python.exe" (
+    echo [ERROR] .venv was not found.
+    echo Create it first with:
+    echo   py -3.12 -m venv .venv
+    echo   .venv\Scripts\python.exe -m pip install -r requirements.txt
+    echo.
+    pause
+    exit /b 1
+)
+
+REM Check ComfyUI entry point.
+if not exist "main.py" (
+    echo [ERROR] main.py was not found.
+    echo Put this BAT file in the ComfyUI-JP-Enhanced root folder.
+    echo.
+    pause
+    exit /b 1
+)
+
+echo ==========================================
+echo   ComfyUI-JP-Enhanced  [DEV]
+echo ==========================================
+echo.
+echo Starting or restarting ComfyUI (dev profile)...
+echo Settings: .env.dev only
+echo.
+
+set PYTHONUTF8=1
+
+".venv\Scripts\python.exe" comfyui_launcher.py --profile dev
+set "COMFY_EXIT_CODE=%ERRORLEVEL%"
+
+echo.
+echo ComfyUI (dev) has stopped.
+pause
+endlocal & exit /b %COMFY_EXIT_CODE%

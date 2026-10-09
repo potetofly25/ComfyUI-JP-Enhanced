@@ -28,15 +28,16 @@ echo ==========================================
 echo   ComfyUI-JP-Enhanced
 echo ==========================================
 echo.
-echo Starting ComfyUI...
+echo Starting or restarting ComfyUI...
 echo URL: http://127.0.0.1:8188
 echo.
 
 set PYTHONUTF8=1
 
-".venv\Scripts\python.exe" main.py --port 8188
+".venv\Scripts\python.exe" comfyui_launcher.py
+set "COMFY_EXIT_CODE=%ERRORLEVEL%"
 
 echo.
 echo ComfyUI has stopped.
 pause
-endlocal
+endlocal & exit /b %COMFY_EXIT_CODE%

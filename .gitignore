@@ -26,3 +26,5 @@ uv.lock
 .comfy_environment
 .project-knowledge/
 .codegraph/
+.testdata/
+.env

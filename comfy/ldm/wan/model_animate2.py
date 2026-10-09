@@ -137,9 +137,9 @@ class PoseBranchCache:
                 if stream is not None:
                     stream.synchronize()
             self._pending = {}
-        for s in self.slots:
+        for index, s in enumerate(self.slots):
             if s["key"].shape == k.shape and torch.equal(s["key"], k.to(s["key"].device)):
-                self.slots.remove(s)
+                self.slots.pop(index)
                 self.slots.append(s)
                 self.slot = s
                 return True
