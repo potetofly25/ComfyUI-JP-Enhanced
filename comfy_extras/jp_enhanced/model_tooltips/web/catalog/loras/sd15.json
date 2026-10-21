@@ -1,0 +1,16 @@
+{
+  "category": "loras",
+  "models": [
+    {
+      "file": "SD15/Webio-women.safetensors",
+      "name": "Webio-women",
+      "author": "未確認",
+      "baseModel": "Stable Diffusion 1.5（埋め込みメタデータ）",
+      "description": "SD1.5ベースで学習されたLoRA。具体的な効果・作者は未確認。",
+      "notes": "埋め込み情報はrank 64・alpha 64。QwenやSDXLにはそのまま適用できません。トリガー・推奨強度は未確認。",
+      "publisher": "",
+      "verification": "ローカルのファイル名・埋め込みメタデータのみ。配布元未確認。",
+      "sources": []
+    }
+  ]
+}

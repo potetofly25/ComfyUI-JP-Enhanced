@@ -7,7 +7,7 @@ from comfy_extras.jp_enhanced.image_input import image_paths, load_image
 from comfy_extras.jp_enhanced.qwen_spectrum.generation import EDIT_RULES, NEGATIVE_RULES
 from comfy_extras.jp_enhanced.qwen_spectrum.spectrum.config import SpectrumConfig
 from comfy_extras.jp_enhanced.qwen_spectrum.spectrum.patcher import create_spectrum_wrapper
-from comfy_extras.nodes_custom_sampler import BasicGuider, RandomNoise, SamplerCustomAdvanced
+from comfy_extras.nodes_custom_sampler import BasicGuider, ManualSigmas, RandomNoise, SamplerCustomAdvanced
 from comfy_extras.nodes_qwen import TextEncodeQwenImage21
 import comfy.patcher_extension
 import comfy.samplers
@@ -15,6 +15,7 @@ import comfy.model_management
 import folder_paths
 
 from .viggle import ViggleTurboLora, ViggleTurboSigmas
+from .color_only import JPMangaColorOnly, JPMangaReferenceFill
 
 
 class JPMangaColorPhased:
@@ -27,7 +28,7 @@ class JPMangaColorPhased:
             "japanese": ("STRING", {"forceInput": True}),
             "negative_english": ("STRING", {"forceInput": True}),
             "negative_japanese": ("STRING", {"forceInput": True}),
-            "mode": (["Spectrum", "Turbo", "Standard"],),
+            "mode": (["Spectrum", "Turbo", "Standard", "Official Turbo"],),
             "pages_per_group": ("INT", {"default": 4, "min": 1, "max": 32}),
             "seed": ("INT", {"default": 12, "min": 0, "max": 0xffffffffffffffff}),
             "resolution": ("INT", {"default": 0, "min": 0, "max": 4096, "step": 32}),
@@ -51,7 +52,8 @@ class JPMangaColorPhased:
         model, positive, negative = self.prepare(model, mode, japanese[0], english[0],
             negative_japanese[0], negative_english[0], translator, lora_name[0])
         return (list(self.generate_pages(image, model, clip, vae, positive, negative, mode,
-            pages_per_group[0], seed[0], resolution[0], steps[0], cfg[0], reference[0] if reference else None)),)
+            pages_per_group[0], seed[0], resolution[0], steps[0], cfg[0], reference[0] if reference else None,
+            additional_references=reference[1:] if reference else ())),)
 
     @staticmethod
     def prepare(model, mode, japanese, english, negative_japanese, negative_english, translator, lora_name):
@@ -59,7 +61,7 @@ class JPMangaColorPhased:
             clip=translator, texts={"text_0": japanese}, translation_rules=EDIT_RULES,
             english_suffix=english).result[0]
         negative = ""
-        if mode != "Turbo":
+        if mode not in ("Turbo", "Official Turbo"):
             negative = JPEnhancedEnglishPrompt.execute(
                 clip=translator, texts={"text_0": negative_japanese}, translation_rules=NEGATIVE_RULES,
                 english_suffix=negative_english).result[0]
@@ -68,7 +70,7 @@ class JPMangaColorPhased:
         return model, positive, negative
 
     def generate_pages(self, image, model, clip, vae, positive, negative, mode,
-                       pages_per_group, seed, resolution, steps, cfg, reference=None):
+                       pages_per_group, seed, resolution, steps, cfg, reference=None, additional_references=()):
         for start in range(0, len(image), pages_per_group):
             pages = image[start:start + pages_per_group]
             encoded = []
@@ -76,12 +78,18 @@ class JPMangaColorPhased:
                 images = {"image_1": page}
                 if reference is not None:
                     images["image_2"] = reference
+                for index, extra_reference in enumerate(additional_references, start=3):
+                    images[f"image_{index}"] = extra_reference
                 encoded.append(TextEncodeQwenImage21.execute(
                     clip, positive, negative, vae=vae, resolution=resolution, images=images).result)
             sampled = []
             for conditioning, unconditioned, latent in encoded:
-                if mode == "Turbo":
-                    sigmas = ViggleTurboSigmas().get_sigmas(latent, "1.0, 0.9375, 0.875, 0.75, 0.5, 0.25")[0]
+                if mode in ("Turbo", "Official Turbo"):
+                    if mode == "Official Turbo":
+                        # Qwen-Image-2.1-Turbo model_index.json sample_sigmas, with terminal zero.
+                        sigmas = ManualSigmas.execute("1.0, 0.978453, 0.95418, 0.926626, 0.89508, 0.845148, 0.704534, 0.414568, 0.0").result[0]
+                    else:
+                        sigmas = ViggleTurboSigmas().get_sigmas(latent, "1.0, 0.9375, 0.875, 0.75, 0.5, 0.25")[0]
                     sampled.append(SamplerCustomAdvanced.execute(
                         RandomNoise.execute(seed).result[0],
                         BasicGuider.execute(model, conditioning).result[0],
@@ -193,11 +201,15 @@ class JPMangaColorTurboSequential(JPMangaColorSequential):
 
 
 NODE_CLASS_MAPPINGS = {
+    'JPMangaReferenceFill': JPMangaReferenceFill,
+    'JPMangaColorOnly': JPMangaColorOnly,
     'JPMangaColorPhased': JPMangaColorPhased,
     'JPMangaColorSequential': JPMangaColorSequential,
     'JPMangaColorTurboSequential': JPMangaColorTurboSequential,
 }
 NODE_DISPLAY_NAME_MAPPINGS = {
+    'JPMangaReferenceFill': '漫画カラー化（参考色でマスク範囲を補正）',
+    'JPMangaColorOnly': '漫画カラー化（元の線・明暗を保持して色だけ転写）',
     'JPMangaColorPhased': '漫画カラー化（工程別・Spectrum／Turbo）',
     'JPMangaColorSequential': '漫画カラー化（1枚ずつ読込・生成・保存）',
     'JPMangaColorTurboSequential': '漫画カラー化（Turbo・英語Positive・1枚ずつ保存）',

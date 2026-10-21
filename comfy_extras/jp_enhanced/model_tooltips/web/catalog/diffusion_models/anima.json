@@ -1,0 +1,18 @@
+{
+  "category": "diffusion_models",
+  "models": [
+    {
+      "file": "Anima/anima_aestheticV11.safetensors",
+      "name": "Anima Aesthetic v1.1",
+      "author": "派生版作者は未確認。基礎モデル: CircleStone Labs / Comfy Org",
+      "baseModel": "Anima",
+      "description": "Anima系の生成モデル。基礎モデルはアニメ向けの独立したアーキテクチャ。",
+      "notes": "Aesthetic v1.1固有の配布元未確認。基礎Anima用VAEとQwen-Image 2.1用VAEの互換性を前提にしない。",
+      "publisher": "",
+      "verification": "基礎モデル資料のみ確認。導入派生版は名称による分類。",
+      "sources": [
+        "https://huggingface.co/circlestone-labs/Anima"
+      ]
+    }
+  ]
+}

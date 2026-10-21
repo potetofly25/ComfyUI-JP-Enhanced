@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-10-10",
+  "files": [
+    "checkpoints/sd15.json",
+    "checkpoints/sdxl.json",
+    "diffusion_models/anima.json",
+    "diffusion_models/flux2.json",
+    "diffusion_models/krea2.json",
+    "diffusion_models/minimax.json",
+    "diffusion_models/qwen_image.json",
+    "loras/minimax.json",
+    "loras/qwen_image.json",
+    "loras/sd15.json",
+    "vae/flux2.json",
+    "vae/minimax.json",
+    "vae/qwen_image.json",
+    "vae/sdxl.json",
+    "text_encoders/qwen.json",
+    "auxiliary/controlnet.json",
+    "auxiliary/sam3.json",
+    "auxiliary/upscale.json"
+  ]
+}

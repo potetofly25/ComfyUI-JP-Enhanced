@@ -1,0 +1,74 @@
+{
+  "category": "loras",
+  "models": [
+    {
+      "file": "MiniMax/minimax_h3_fl2v_turbo_4step_v1.2_768p_comfyui_bf16.safetensors",
+      "name": "MiniMax H3 FL2V Turbo 4-step v1.2 768p",
+      "author": "LightX2V（Turboシリーズ）",
+      "baseModel": "MiniMax H3 FL2VA（埋め込みbase_model）",
+      "description": "開始・終了フレーム系FL2VA向けの4ステップ高速化LoRA。768p表記。",
+      "notes": "埋め込みbase_modelはFL2VA。導入済みRef2VA本体との互換性は未確認。対応モデルと専用スケジュールを確認。",
+      "publisher": "Comfy Org形式。各ファイルの変換者は未確認",
+      "verification": "シリーズの配布資料とローカルメタデータを確認。個別版の出典は未確定。",
+      "sources": [
+        "https://huggingface.co/Comfy-Org/MiniMax-H3",
+        "https://huggingface.co/lightx2v/Minimax-h3-Turbo"
+      ]
+    },
+    {
+      "file": "MiniMax/minimax_h3_fl2v_turbo_8step_v1.0_768p_comfyui_bf16.safetensors",
+      "name": "MiniMax H3 FL2V Turbo 8-step v1.0 768p",
+      "author": "LightX2V（Turboシリーズ）",
+      "baseModel": "MiniMax H3 FL2VA（埋め込みbase_model）",
+      "description": "開始・終了フレーム系FL2VA向けの8ステップ高速化LoRA。768p表記。",
+      "notes": "埋め込みbase_modelはFL2VA。導入済みRef2VA本体との互換性は未確認。対応モデルと専用スケジュールを確認。",
+      "publisher": "Comfy Org形式。各ファイルの変換者は未確認",
+      "verification": "シリーズの配布資料とローカルメタデータを確認。個別版の出典は未確定。",
+      "sources": [
+        "https://huggingface.co/Comfy-Org/MiniMax-H3",
+        "https://huggingface.co/lightx2v/Minimax-h3-Turbo"
+      ]
+    },
+    {
+      "file": "MiniMax/minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+      "name": "MiniMax H3 FL2V Turbo 8-step v1.0",
+      "author": "LightX2V（Turboシリーズ）",
+      "baseModel": "MiniMax H3 FL2VA（埋め込みbase_model）",
+      "description": "開始・終了フレーム系FL2VA向けの8ステップ高速化LoRA。解像度の詳細は配布元を確認。",
+      "notes": "埋め込みbase_modelはFL2VA。導入済みRef2VA本体との互換性は未確認。対応モデルと専用スケジュールを確認。",
+      "publisher": "Comfy Org形式。各ファイルの変換者は未確認",
+      "verification": "シリーズの配布資料とローカルメタデータを確認。個別版の出典は未確定。",
+      "sources": [
+        "https://huggingface.co/Comfy-Org/MiniMax-H3",
+        "https://huggingface.co/lightx2v/Minimax-h3-Turbo"
+      ]
+    },
+    {
+      "file": "MiniMax/minimax_h3_ref2v_turbo_8step_v1.0_768p_comfyui_bf16.safetensors",
+      "name": "MiniMax H3 Ref2V Turbo 8-step v1.0 768p",
+      "author": "LightX2V（Turboシリーズ）",
+      "baseModel": "MiniMax H3 FL2VA（埋め込みbase_model）",
+      "description": "ファイル名はRef2V用の8ステップ高速化・768pを示す。",
+      "notes": "埋め込みbase_modelは4本ともFL2VA。Ref2V表記の1本は名称と食い違うため、対象モデルを未確定として扱う。推奨強度・CFGは当該版資料未確認。",
+      "publisher": "Comfy Org形式。各ファイルの変換者は未確認",
+      "verification": "シリーズの配布資料とローカルメタデータを確認。個別版の出典は未確定。",
+      "sources": [
+        "https://huggingface.co/Comfy-Org/MiniMax-H3",
+        "https://huggingface.co/lightx2v/Minimax-h3-Turbo"
+      ]
+    },
+    {
+      "file": "MiniMax/MM-H3-Ref2VA-Age_Slider_v2-EXPERIMENTAL_Lora.safetensors",
+      "name": "MM-H3 Ref2VA Age Slider v2 Experimental",
+      "author": "未確認",
+      "baseModel": "MiniMax H3 Ref2VA（埋め込みメタデータ）",
+      "description": "Age Sliderという名称の実験版LoRA。調整効果の方向・推奨強度は未確認。",
+      "notes": "Playtime-AIには同系統名の配布があるが、このv2ファイルの作者と同一性は確認できません。",
+      "publisher": "",
+      "verification": "ローカルのname・ss_base_model_versionを確認。関連配布へのリンクは同一性の証明ではない。",
+      "sources": [
+        "https://huggingface.co/Playtime-AI/Minimax_H3-Age_Slider"
+      ]
+    }
+  ]
+}

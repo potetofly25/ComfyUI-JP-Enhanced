@@ -1,0 +1,31 @@
+{
+  "category": "vae",
+  "models": [
+    {
+      "file": "MiniMax/minimax_h3_audio_vae_fp32.safetensors",
+      "name": "MiniMax H3 Audio VAE FP32",
+      "author": "MiniMaxAI",
+      "baseModel": "MiniMax H3 音声",
+      "description": "H3の音声潜在をエンコード・デコードするVAE。ローカルメタデータは32kHz・2チャンネル。",
+      "notes": "画像・動画VAEの代用にはなりません。",
+      "publisher": "Comfy Org",
+      "verification": "配布資料とファイル名を照合。ハッシュ未照合。",
+      "sources": [
+        "https://huggingface.co/Comfy-Org/MiniMax-H3"
+      ]
+    },
+    {
+      "file": "MiniMax/minimax_h3_video_vae_int8_convrot.safetensors",
+      "name": "MiniMax H3 Video VAE INT8 ConvRot",
+      "author": "MiniMaxAI",
+      "baseModel": "MiniMax H3 動画",
+      "description": "H3の映像潜在を扱う量子化VAE。",
+      "notes": "H3用の動画VAEとして使用。音声には別のAudio VAEが必要。",
+      "publisher": "Comfy Org",
+      "verification": "配布資料とファイル名を照合。ハッシュ未照合。",
+      "sources": [
+        "https://huggingface.co/Comfy-Org/MiniMax-H3"
+      ]
+    }
+  ]
+}

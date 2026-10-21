@@ -1,0 +1,19 @@
+{
+  "category": "vae",
+  "models": [
+    {
+      "file": "FLUX2/flux2-vae.safetensors",
+      "name": "FLUX.2 VAE",
+      "author": "Black Forest Labs",
+      "baseModel": "FLUX.2",
+      "description": "FLUX.2用の潜在表現と画像の変換器。",
+      "notes": "SDXL・Qwen用VAEとは別物。モデルに合うVAEを接続。",
+      "publisher": "個別ファイルの配布者は未確認",
+      "verification": "配布資料とファイル名を照合。ハッシュ未照合。",
+      "sources": [
+        "https://huggingface.co/Comfy-Org/vae-text-encorder-for-flux-klein-4b",
+        "https://huggingface.co/black-forest-labs/FLUX.2-klein-base-4B"
+      ]
+    }
+  ]
+}

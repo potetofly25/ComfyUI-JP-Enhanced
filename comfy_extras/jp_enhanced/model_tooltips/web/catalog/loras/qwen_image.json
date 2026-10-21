@@ -1,0 +1,42 @@
+{
+  "category": "loras",
+  "models": [
+    {
+      "file": "Qwen/NSFW Qwen Lora.safetensors",
+      "name": "NSFW Qwen LoRA",
+      "author": "未確認",
+      "baseModel": "qwen_image_2（埋め込みメタデータ）",
+      "description": "成人向け用途を示す名称の個人LoRA。具体的な学習内容・効果は未確認。",
+      "notes": "メタデータはqwen_image_2。Qwen-Image 2.1対応やトリガー、推奨強度を断定できません。",
+      "publisher": "",
+      "verification": "ローカルのファイル名・埋め込みメタデータのみ。配布元未確認。",
+      "sources": []
+    },
+    {
+      "file": "Qwen/Qwen-Image-2.1-viggle-turbo-v0.2.1-6step-lora-r128.safetensors",
+      "name": "Qwen-Image 2.1 Viggle Turbo v0.2.1 r128",
+      "author": "Viggle",
+      "baseModel": "Qwen-Image 2.1",
+      "description": "6ステップで生成・画像編集を高速化する蒸留LoRA。rank 128版。",
+      "notes": "CFG 1と配布ワークフローの専用sigma列を使用。既にTurbo統合済みのモデルやSpectrumとの重ね掛けは未検証。",
+      "publisher": "",
+      "verification": "配布資料とファイル名を照合。ハッシュ未照合。",
+      "sources": [
+        "https://huggingface.co/Viggle/Qwen-Image-2.1-viggle-turbo"
+      ]
+    },
+    {
+      "file": "Qwen/qwen-image-2.1-consistency.safetensors",
+      "name": "Qwen-Image 2.1 Consistency LoRA（step 1500）",
+      "author": "ausboss",
+      "baseModel": "Qwen-Image 2.1（Comfy-Org INT8 ConvRotで作者検証）",
+      "description": "画像編集時の位置ずれと、指定していない背景・髪などの描き直しを抑えるLoRA。色・衣装・画風の変更など、構図を保ちたい編集向け。",
+      "notes": "トリガー不要。LoraLoaderModelOnlyで強度1.0。作者の検証設定: 25 steps、CFG 1、euler/simple、denoise 1。Text Encode Qwen Image 2.1のimage_1に元画像、resolutionは0とし、同ノードのlatent出力でサンプリング。ポーズ変更や顔の向き変更を無視する場合あり。Turbo LoRA併用・2MP・CFG 1超は作者未検証。",
+      "publisher": "",
+      "verification": "作者の配布資料と導入ファイル名を照合。ハッシュ未照合。この環境での生成品質は未検証。",
+      "sources": [
+        "https://huggingface.co/ausboss/Qwen-Image-2.1-Consistency-LoRA"
+      ]
+    }
+  ]
+}

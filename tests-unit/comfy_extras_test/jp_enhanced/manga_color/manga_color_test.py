@@ -13,6 +13,40 @@ from comfy_extras.jp_enhanced.manga_color.viggle import ViggleTurboSigmas, run_w
 
 
 class MangaColorTests(unittest.TestCase):
+    def test_multiple_reference_pages_keep_order_and_independent_sizes(self):
+        page = torch.zeros(1, 32, 32, 3)
+        references = [torch.ones(1, 32, 64, 3), torch.ones(1, 64, 32, 3)]
+        latent = {'samples': torch.zeros(1, 16, 2, 2)}
+        with patch.object(module.TextEncodeQwenImage21, 'execute', return_value=SimpleNamespace(result=('pos', 'neg', latent))) as encode, \
+             patch.object(module.JPMangaColorPhased, 'sample_standard', return_value=latent), \
+             patch.object(module.nodes.VAEDecode, 'decode', return_value=(page,)):
+            list(module.JPMangaColorPhased().generate_pages(
+                [page], 'model', 'clip', 'vae', 'pos', '', 'Standard', 1, 12, 1024, 25, 1.0,
+                reference=references[0], additional_references=references[1:]))
+        images = encode.call_args.kwargs['images']
+        self.assertEqual(list(images), ['image_1', 'image_2', 'image_3'])
+        self.assertIs(images['image_1'], page)
+        self.assertIs(images['image_2'], references[0])
+        self.assertIs(images['image_3'], references[1])
+
+    def test_official_turbo_uses_fixed_schedule_without_extra_lora(self):
+        image = torch.ones(1, 32, 32, 3)
+        latent = {'samples': torch.zeros(1, 16, 2, 2)}
+        with patch.object(module.TextEncodeQwenImage21, 'execute', return_value=SimpleNamespace(result=('pos', 'neg', latent))), \
+             patch.object(module.BasicGuider, 'execute', return_value=SimpleNamespace(result=('guider',))), \
+             patch.object(module.RandomNoise, 'execute', return_value=SimpleNamespace(result=('noise',))), \
+             patch.object(module.SamplerCustomAdvanced, 'execute', return_value=SimpleNamespace(result=(latent,))) as sample, \
+             patch.object(module.nodes.VAEDecode, 'decode', return_value=(image,)), \
+             patch.object(module.ViggleTurboLora, 'load') as load, \
+             patch.object(module.JPMangaColorPhased, 'sample_standard') as standard:
+            result = list(module.JPMangaColorPhased().generate_pages(
+                [image], 'model', 'clip', 'vae', 'pos', '', 'Official Turbo', 1, 12, 1024, 99, 9.0, image))
+        torch.testing.assert_close(sample.call_args.args[3], torch.tensor([
+            1.0, 0.978453, 0.95418, 0.926626, 0.89508, 0.845148, 0.704534, 0.414568, 0.0]))
+        self.assertIs(result[0], image)
+        load.assert_not_called()
+        standard.assert_not_called()
+
     def test_turbo_sequential_positive_only(self):
         node = module.JPMangaColorTurboSequential()
         schema = node.INPUT_TYPES()

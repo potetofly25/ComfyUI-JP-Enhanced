@@ -2563,6 +2563,7 @@ async def init_builtin_extra_nodes():
         "jp_enhanced/image_input",
         "jp_enhanced/manga_color",
         "jp_enhanced/node_tooltips",
+        "jp_enhanced/model_tooltips",
         "jp_enhanced/error_support",
         "jp_enhanced/startup_sidebar",
         "nodes_loop.py",

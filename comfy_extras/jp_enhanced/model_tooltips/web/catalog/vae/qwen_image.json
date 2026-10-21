@@ -1,0 +1,18 @@
+{
+  "category": "vae",
+  "models": [
+    {
+      "file": "QwenImage/qwen_image_2.1_vae_bf16.safetensors",
+      "name": "Qwen-Image 2.1 VAE BF16",
+      "author": "Alibaba / Qwen",
+      "baseModel": "Qwen-Image 2.1",
+      "description": "Qwen-Image 2.1用の画像・潜在変換器。メタデータのarchitectureも2.1専用を示す。",
+      "notes": "旧Qwen-Image VAEやAnima用VAEと同一とみなさない。",
+      "publisher": "Comfy Org",
+      "verification": "配布資料とファイル名を照合。ハッシュ未照合。",
+      "sources": [
+        "https://huggingface.co/Comfy-Org/Qwen-Image-2.1"
+      ]
+    }
+  ]
+}

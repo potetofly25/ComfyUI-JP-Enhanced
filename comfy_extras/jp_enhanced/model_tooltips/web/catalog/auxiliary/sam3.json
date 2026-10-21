@@ -1,0 +1,18 @@
+{
+  "category": "sam3",
+  "models": [
+    {
+      "file": "sam3.pt",
+      "name": "SAM 3",
+      "author": "Meta",
+      "baseModel": "Segment Anything Model 3",
+      "description": "画像・動画中の対象を切り分けるセグメンテーションモデル。",
+      "notes": "画像生成用チェックポイントではありません。対応SAM3ノードで使用。",
+      "publisher": "",
+      "verification": "配布資料とファイル名を照合。ハッシュ未照合。",
+      "sources": [
+        "https://huggingface.co/facebook/sam3"
+      ]
+    }
+  ]
+}

@@ -2,7 +2,7 @@ import asyncio
 import unittest
 from unittest.mock import Mock
 
-from comfy_extras.jp_enhanced.prompt import JPEnhancedEnglishPrompt, JPScenePromptJapanese, JPScenePromptEnglish, comfy_entrypoint
+from comfy_extras.jp_enhanced.prompt import JPEnhancedEnglishPrompt, JPScenePromptJapanese, JPScenePromptEnglish, JPVideoPromptJapanese, comfy_entrypoint
 
 
 def test_translation_orders_inputs_and_preserves_generation_settings():
@@ -46,7 +46,7 @@ def test_plain_translation_without_prefix():
 
 def test_extension_exposes_common_node():
     extension = asyncio.run(comfy_entrypoint())
-    assert asyncio.run(extension.get_node_list()) == [JPEnhancedEnglishPrompt, JPScenePromptJapanese, JPScenePromptEnglish]
+    assert asyncio.run(extension.get_node_list()) == [JPEnhancedEnglishPrompt, JPScenePromptJapanese, JPScenePromptEnglish, JPVideoPromptJapanese]
     schema = JPEnhancedEnglishPrompt.INPUT_TYPES()
     assert schema["optional"]["texts"][0] == "COMFY_AUTOGROW_V3"
 
@@ -81,3 +81,75 @@ def test_scene_japanese_preserves_field_order():
     assert result.result == (clip.decode.return_value,)
     assert clip.tokenize.call_args.args[0].endswith("人物\nコート\n公園\n立つ")
     assert JPScenePromptJapanese.execute("", "", "", "").result == ("",)
+
+
+def test_video_draft_protects_dialogue_and_blocks_generation():
+    from comfy_execution.graph_utils import ExecutionBlocker
+    clip = Mock()
+    clip.decode.return_value = "integrated_multimodal_description: <Picture 1> waves.\noverall_soundscape: <d>[Japanese] __JP_DIALOGUE_0__</d>\nnon_diegetic_music: N/A"
+    result = JPVideoPromptJapanese.execute('手を振って「こんにちは」と話す。BGMなし', clip=clip)
+    assert isinstance(result.result[0], ExecutionBlocker)
+    text = result.ui.as_dict()['text'][0]
+    assert 'こんにちは' in text and '__JP_DIALOGUE_' not in text
+    assert 'こんにちは' not in clip.tokenize.call_args.args[0]
+
+
+def test_video_reviewed_text_is_exact_and_does_not_run_llm():
+    clip = Mock()
+    text = '  edited <d>[Japanese] こんにちは</d>\n'
+    result = JPVideoPromptJapanese.execute('', 'Use edited prompt', text, clip=clip)
+    assert result.result == (text,)
+    clip.tokenize.assert_not_called()
+
+
+def test_video_lost_dialogue_is_rejected():
+    clip = Mock()
+    for generated in ['truncated', 'integrated_multimodal_description: waves\noverall_soundscape: voice\nnon_diegetic_music: N/A']:
+        clip.decode.return_value = generated
+        with unittest.TestCase().assertRaises(ValueError):
+            JPVideoPromptJapanese.execute('「こんにちは」と話す', clip=clip)
+
+
+def test_video_convert_and_generate_returns_prompt_without_blocking():
+    clip = Mock()
+    clip.decode.return_value = "integrated_multimodal_description: <Picture 1> waves.\noverall_soundscape: <d>[Japanese] __JP_DIALOGUE_0__</d>\nnon_diegetic_music: N/A"
+    result = JPVideoPromptJapanese.execute('手を振って「こんにちは」と話す。BGMなし', mode='Convert and generate', clip=clip)
+    assert isinstance(result.result[0], str)
+    assert 'こんにちは' in result.result[0]
+    assert result.result[0] == result.ui.as_dict()['text'][0]
+
+
+def test_video_missing_headings_do_not_raise_token_limit_error():
+    clip = Mock()
+    clip.decode.return_value = 'A person walks through a park.'
+    result = JPVideoPromptJapanese.execute('公園を歩く', mode='Convert and generate', clip=clip).result[0]
+    assert result == 'integrated_multimodal_description: A person walks through a park.\n\noverall_soundscape:\n\nnon_diegetic_music:'
+
+
+def test_video_headings_accept_case_and_full_width_colon():
+    clip = Mock()
+    clip.decode.return_value = 'INTEGRATED_MULTIMODAL_DESCRIPTION： A park.\nOVERALL_SOUNDSCAPE : Wind.'
+    result = JPVideoPromptJapanese.execute('公園。風の音', mode='Convert and generate', clip=clip).result[0]
+    assert 'integrated_multimodal_description: A park.' in result
+    assert 'overall_soundscape: Wind.' in result
+    assert result.endswith('non_diegetic_music:')
+
+
+def test_video_retranslates_japanese_instructions_before_restoring_dialogue():
+    clip = Mock()
+    clip.decode.side_effect = [
+        'integrated_multimodal_description: <Picture 1> のキャラが手を振る\noverall_soundscape: __JP_DIALOGUE_0__\nnon_diegetic_music: N/A',
+        'integrated_multimodal_description: The character from <Picture 1> waves.\noverall_soundscape: <d>[Japanese] __JP_DIALOGUE_0__</d>\nnon_diegetic_music: N/A',
+    ]
+    result = JPVideoPromptJapanese.execute('手を振り「こんにちは」と話す', mode='Convert and generate', clip=clip).result[0]
+    assert clip.generate.call_count == 2
+    assert 'のキャラ' not in result
+    assert '<d>[Japanese] こんにちは</d>' in result
+    assert 'こんにちは' not in clip.tokenize.call_args.args[0]
+
+
+def test_video_english_instructions_do_not_trigger_second_translation():
+    clip = Mock()
+    clip.decode.return_value = 'integrated_multimodal_description: Waves.\noverall_soundscape: __JP_DIALOGUE_0__\nnon_diegetic_music: N/A'
+    JPVideoPromptJapanese.execute('「こんにちは」', mode='Convert and generate', clip=clip)
+    assert clip.generate.call_count == 1

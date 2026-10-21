@@ -1,0 +1,57 @@
+{
+  "category": "text_encoders",
+  "models": [
+    {
+      "file": "Qwen3/qwen_3_4b_fp8_mixed.safetensors",
+      "name": "Qwen3 4B FP8 Mixed",
+      "author": "Alibaba / Qwen",
+      "baseModel": "Qwen3 4B / FLUX.2 klein 4B系",
+      "description": "生成モデルへプロンプトを渡すための4Bテキストエンコーダー。",
+      "notes": "CLIPLoaderのtypeは接続先に合わせる。Qwen3-VL 8Bとは別モデル。",
+      "publisher": "当該mixed量子化ファイルの変換者は未確認",
+      "verification": "配布資料とファイル名を照合。ハッシュ未照合。",
+      "sources": [
+        "https://huggingface.co/Comfy-Org/vae-text-encorder-for-flux-klein-4b"
+      ]
+    },
+    {
+      "file": "Qwen3VL/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+      "name": "Qwen3-VL 32B MiniMax H3 NVFP4 AWQ",
+      "author": "Alibaba / Qwen",
+      "baseModel": "MiniMax H3用 Qwen3-VL 32B",
+      "description": "H3用の大規模テキストエンコーダーの量子化版。",
+      "notes": "配布資料ではBlackwell専用ではないと案内。H3用構成で使用。",
+      "publisher": "Comfy Org。量子化元はcybermotazのNVFP4版",
+      "verification": "配布資料とファイル名を照合。ハッシュ未照合。",
+      "sources": [
+        "https://huggingface.co/Comfy-Org/MiniMax-H3"
+      ]
+    },
+    {
+      "file": "Qwen3VL/qwen3vl_8b_fp8_scaled.safetensors",
+      "name": "Qwen3-VL 8B FP8 Scaled",
+      "author": "Alibaba / Qwen",
+      "baseModel": "Qwen-Image 2.1用 Qwen3-VL 8B",
+      "description": "Qwen-Image 2.1の条件付けに用いる8BエンコーダーのFP8 Scaled版。",
+      "notes": "生成モデル本体ではありません。CLIPLoaderのtypeと本体の対応を確認。",
+      "publisher": "INT8はComfy Org。同名FP8版の変換者は未確認",
+      "verification": "配布資料とファイル名を照合。ハッシュ未照合。",
+      "sources": [
+        "https://huggingface.co/Comfy-Org/Qwen-Image-2.1"
+      ]
+    },
+    {
+      "file": "Qwen3VL/qwen3vl_8b_int8_convrot.safetensors",
+      "name": "Qwen3-VL 8B INT8 ConvRot",
+      "author": "Alibaba / Qwen",
+      "baseModel": "Qwen-Image 2.1用 Qwen3-VL 8B",
+      "description": "Qwen-Image 2.1の条件付けに用いる8BエンコーダーのINT8 ConvRot版。",
+      "notes": "生成モデル本体ではありません。CLIPLoaderのtypeと本体の対応を確認。",
+      "publisher": "Comfy Org",
+      "verification": "配布資料とファイル名を照合。ハッシュ未照合。",
+      "sources": [
+        "https://huggingface.co/Comfy-Org/Qwen-Image-2.1"
+      ]
+    }
+  ]
+}

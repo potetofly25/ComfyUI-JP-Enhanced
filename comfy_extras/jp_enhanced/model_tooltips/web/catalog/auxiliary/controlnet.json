@@ -1,0 +1,16 @@
+{
+  "category": "controlnet",
+  "models": [
+    {
+      "file": "diffusion_pytorch_model.fp16.safetensors",
+      "name": "未特定のControlNet FP16",
+      "author": "未確認",
+      "baseModel": "SDXL系（テンソル構造から推定）",
+      "description": "条件画像で生成を制御するモデル。add_embedding入力2816の構造を確認。",
+      "notes": "汎用ファイル名のためCanny・Depth・OpenPose等の種類を特定できません。用途を推測して割り当てない。",
+      "publisher": "",
+      "verification": "ローカルのキー・shapeのみ確認。配布元とControlNetの種類は未確認。",
+      "sources": []
+    }
+  ]
+}

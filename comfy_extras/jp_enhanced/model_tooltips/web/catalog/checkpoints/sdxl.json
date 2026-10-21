@@ -1,0 +1,66 @@
+{
+  "category": "checkpoints",
+  "models": [
+    {
+      "file": "SDXL/Animagine/animagine-xl-4.0-opt.safetensors",
+      "name": "Animagine XL 4.0 Opt",
+      "author": "Cagliostro Research Lab",
+      "baseModel": "SDXL",
+      "description": "アニメ向けの追加学習版。Optは追加データで調整された一般用途向けバリアント。",
+      "notes": "タグ形式のプロンプトを想定。Illustrious派生とは区別する。",
+      "publisher": "",
+      "verification": "作者・名称・Optの特徴は埋め込みmodelspecと作者資料を照合。",
+      "sources": [
+        "https://huggingface.co/cagliostrolab/animagine-xl-4.0"
+      ]
+    },
+    {
+      "file": "SDXL/Illustrious/hassakuXLIllustrious_v34.safetensors",
+      "name": "Hassaku XL (Illustrious) 3.4",
+      "author": "Ikena",
+      "baseModel": "SDXL / Illustrious",
+      "description": "明るく特徴的なアニメ画風を目指したチェックポイント。",
+      "notes": "配布ページではEuler a、CFG 3〜7を案内。個々のLoRAとの相性は比較が必要。",
+      "publisher": "",
+      "verification": "配布資料とファイル名を照合。ハッシュ未照合。",
+      "sources": [
+        "https://tensorhub.art/models/956469300250604335"
+      ]
+    },
+    {
+      "file": "SDXL/Illustrious/rinFlanimeIllustrious_v50.safetensors",
+      "name": "rinFLanime Illustrious v5.0",
+      "author": "未確認",
+      "baseModel": "SDXL / Illustrious系（名称・マージ情報）",
+      "description": "埋め込みマージ情報ではflaBase_v50とflanime_v50を使用した派生モデル。",
+      "notes": "作者・配布元・推奨設定は未確認。ファイル名のrinだけで作者を断定しない。",
+      "publisher": "",
+      "verification": "ローカルのファイル名・埋め込みメタデータのみ。配布元未確認。",
+      "sources": []
+    },
+    {
+      "file": "SDXL/Illustrious/waiIllustriousSDXL_v170.safetensors",
+      "name": "WAI-illustrious-SDXL v17.0",
+      "author": "WAI0731（配布カードのクレジット）",
+      "baseModel": "SDXL / Illustrious",
+      "description": "アニメ系の派生チェックポイント。配布カードではVAE内蔵と案内。",
+      "notes": "Euler a、15〜30 steps、CFG 5〜7が配布カードの目安。転載先のライセンス表示だけで利用条件を断定しない。",
+      "publisher": "LyliaEngineは参照した転載先。元作者とは区別。",
+      "verification": "配布資料とファイル名を照合。ハッシュ未照合。",
+      "sources": [
+        "https://huggingface.co/LyliaEngine/waiIllustriousSDXL_v170"
+      ]
+    },
+    {
+      "file": "SDXL/rinHErosNSFW_v30.safetensors",
+      "name": "rinHEros NSFW v3.0",
+      "author": "未確認",
+      "baseModel": "SDXL / Illustrious系（マージ情報から推定）",
+      "description": "埋め込みマージ情報ではIllustrious XL・WAI Illustrious・heros_v30を使用。",
+      "notes": "作者・配布元・具体的な画風や推奨設定は未確認。",
+      "publisher": "",
+      "verification": "ローカルのファイル名・埋め込みメタデータのみ。配布元未確認。",
+      "sources": []
+    }
+  ]
+}

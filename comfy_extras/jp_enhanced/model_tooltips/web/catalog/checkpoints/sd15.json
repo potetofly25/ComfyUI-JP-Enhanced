@@ -1,0 +1,53 @@
+{
+  "category": "checkpoints",
+  "models": [
+    {
+      "file": "SD15/chilloutmix_NiPrunedFp32Fix.safetensors",
+      "name": "ChilloutMix Ni Pruned FP32 Fix",
+      "author": "未確認",
+      "baseModel": "Stable Diffusion 1.5系（名称から推定）",
+      "description": "ChilloutMixの派生チェックポイント。人物写真向けとして流通する系統。",
+      "notes": "作者・当該派生版の出典、推奨設定は未確認。",
+      "publisher": "",
+      "verification": "ローカルのファイル名・埋め込みメタデータのみ。配布元未確認。",
+      "sources": []
+    },
+    {
+      "file": "SD15/cityedgemix_v125.safetensors",
+      "name": "CityEdgeMix v1.25",
+      "author": "未確認",
+      "baseModel": "Stable Diffusion 1.5系（配置から推定）",
+      "description": "CityEdgeMixのチェックポイント。人物向けの詳細な特徴・設定は一次資料未確認。",
+      "notes": "配布ページの取得に失敗。作者を確定できていません。",
+      "publisher": "",
+      "verification": "ローカルのファイル名・埋め込みメタデータのみ。配布元未確認。",
+      "sources": []
+    },
+    {
+      "file": "SD15/meinahentai_v5Final.safetensors",
+      "name": "MeinaHentai V5 Final",
+      "author": "Meina（シリーズ作者）",
+      "baseModel": "Stable Diffusion 1.5",
+      "description": "成人向けアニメ表現を中心とするMeinaシリーズ。",
+      "notes": "シリーズ資料を参照。V5 Final固有の推奨設定とファイル同一性は未確認。",
+      "publisher": "",
+      "verification": "配布資料とファイル名を照合。ハッシュ未照合。",
+      "sources": [
+        "https://huggingface.co/Meina/MeinaHentai"
+      ]
+    },
+    {
+      "file": "SD15/stable-diffusion-v1-5-pruned.safetensors",
+      "name": "Stable Diffusion v1.5 Pruned",
+      "author": "Runway / CompVis / Stability AI",
+      "baseModel": "Stable Diffusion 1.5",
+      "description": "テキストから画像を生成する基礎チェックポイント。SD1.5用LoRAの接続先。",
+      "notes": "SDXLやQwen向けLoRAとは別系統。",
+      "publisher": "",
+      "verification": "配布資料とファイル名を照合。ハッシュ未照合。",
+      "sources": [
+        "https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5"
+      ]
+    }
+  ]
+}

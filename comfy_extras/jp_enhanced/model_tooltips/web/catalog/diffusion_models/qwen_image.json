@@ -1,0 +1,54 @@
+{
+  "category": "diffusion_models",
+  "models": [
+    {
+      "file": "QwenImage/qwen_image_2.1_int8_convrot.safetensors",
+      "name": "Qwen-Image 2.1 INT8 ConvRot",
+      "author": "Alibaba / Qwen",
+      "baseModel": "Qwen-Image 2.1",
+      "description": "テキスト生成・画像編集を統合したQwen-Image 2.1の量子化版。",
+      "notes": "2.1用テキストエンコーダーとVAEを使用。旧2512・Edit-2511用LoRAの互換性は前提にしない。",
+      "publisher": "Comfy Org（ComfyUI向け再配布）",
+      "verification": "配布資料とファイル名を照合。ハッシュ未照合。",
+      "sources": [
+        "https://huggingface.co/Comfy-Org/Qwen-Image-2.1"
+      ]
+    },
+    {
+      "file": "QwenImage/Qwen-Image-2.1-Turbo-AD-Q5_K.gguf",
+      "name": "Qwen-Image 2.1 Turbo AD-Q5_K",
+      "author": "Alibaba / Qwen",
+      "baseModel": "Qwen-Image 2.1 Turbo",
+      "description": "TurboモデルのAtomic Dynamic量子化版。テンソルごとに量子化精度を調整。",
+      "notes": "Turboは8ステップ用。通常モデルと同じ設定や追加Turbo LoRAを重ねる前提にしない。",
+      "publisher": "AtomicChat（同名GGUFの配布元）",
+      "verification": "配布資料とファイル名を照合。ハッシュ未照合。",
+      "sources": [
+        "https://huggingface.co/AtomicChat/Qwen-Image-2.1-Turbo-GGUF",
+        "https://huggingface.co/Comfy-Org/Qwen-Image-2.1"
+      ]
+    },
+    {
+      "file": "QwenImage/qwen-image-2.1-UC-Q4_K_M.gguf",
+      "name": "Qwen-Image 2.1 UC Q4_K_M",
+      "author": "派生版作者は未確認。基礎モデル: Alibaba / Qwen",
+      "baseModel": "Qwen-Image 2.1（GGUF architectureで確認）",
+      "description": "Qwen-Image 2.1系のQ4_K_M量子化ファイル。",
+      "notes": "UCの意味・改変内容・変換者は未確認。通常版やTurbo版のどちらに相当するか断定できません。",
+      "publisher": "",
+      "verification": "ローカルのファイル名・埋め込みメタデータのみ。配布元未確認。",
+      "sources": []
+    },
+    {
+      "file": "QwenImage/qwen-image-2.1-UC-Q8_0.gguf",
+      "name": "Qwen-Image 2.1 UC Q8_0",
+      "author": "派生版作者は未確認。基礎モデル: Alibaba / Qwen",
+      "baseModel": "Qwen-Image 2.1（GGUF architectureで確認）",
+      "description": "Qwen-Image 2.1系のQ8_0量子化ファイル。",
+      "notes": "UCの意味・改変内容・変換者は未確認。通常版やTurbo版のどちらに相当するか断定できません。",
+      "publisher": "",
+      "verification": "ローカルのファイル名・埋め込みメタデータのみ。配布元未確認。",
+      "sources": []
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "category": "upscale_models",
+  "models": [
+    {
+      "file": "4x_IllustrationJaNai_V1_DAT2_190k.pth",
+      "name": "IllustrationJaNai V1 DAT2",
+      "author": "the-database",
+      "baseModel": "カラーイラスト用アップスケーラー",
+      "description": "品質重視の4倍拡大。ESRGAN版より処理が重い。",
+      "notes": "カラーイラスト・漫画表紙など向け。白黒漫画専用MangaJaNaiシリーズとは区別。",
+      "publisher": "",
+      "verification": "配布資料とファイル名を照合。ハッシュ未照合。",
+      "sources": [
+        "https://github.com/the-database/MangaJaNai/releases/tag/1.0.0"
+      ]
+    },
+    {
+      "file": "4x_IllustrationJaNai_V1_ESRGAN_135k.pth",
+      "name": "IllustrationJaNai V1 ESRGAN",
+      "author": "the-database",
+      "baseModel": "カラーイラスト用アップスケーラー",
+      "description": "速度と品質のバランスを取った4倍拡大。",
+      "notes": "カラーイラスト・漫画表紙など向け。白黒漫画専用MangaJaNaiシリーズとは区別。",
+      "publisher": "",
+      "verification": "配布資料とファイル名を照合。ハッシュ未照合。",
+      "sources": [
+        "https://github.com/the-database/MangaJaNai/releases/tag/1.0.0"
+      ]
+    }
+  ]
+}
